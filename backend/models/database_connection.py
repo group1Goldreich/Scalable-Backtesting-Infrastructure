@@ -40,6 +40,8 @@ def get_db():
 def get_base():
         return Base
 
+
+
 def create_all_tables():
    return Base.metadata.create_all(bind=engine)
  
