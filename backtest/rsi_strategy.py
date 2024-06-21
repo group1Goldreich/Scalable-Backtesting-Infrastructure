@@ -2,7 +2,6 @@ from __future__ import (absolute_import, division, print_function, unicode_liter
 import datetime
 import os.path
 import backtrader as bt
-from logger import setup_logger
 
 class RsiStrategy(bt.Strategy):
 
