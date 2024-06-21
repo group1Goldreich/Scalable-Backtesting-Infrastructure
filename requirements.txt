@@ -6,3 +6,9 @@ mlflow
 requests
 streamlit
 backtrader
+
+
+#backend
+fastapi
+python-dotenv
+sqlalchemy
