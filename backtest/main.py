@@ -1,6 +1,7 @@
 from sma_strategy import SmaStrategy
 from ema_strategy import EmaStrategy
 from rsi_strategy import RsiStrategy
+from macd_strategy import MacdStrategy
 from backtest import run_backtest
 
 def main(strategy_name, start_date, end_date, params, start_cash, comm):
@@ -8,7 +9,8 @@ def main(strategy_name, start_date, end_date, params, start_cash, comm):
     strategy_map = {
         'sma': SmaStrategy,
         'ema': EmaStrategy,
-        'rsi': RsiStrategy
+        'rsi': RsiStrategy,
+        'macd': MacdStrategy
     }
 
     if strategy_name in strategy_map:
