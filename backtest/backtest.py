@@ -1,8 +1,6 @@
 import backtrader as bt
 import datetime
-from logger import setup_logger
 
-logger = setup_logger('BacktestLogger')
 
 def run_backtest(strategy, strategy_params, data_path, start_date, end_date, start_cash, comm, stake=10):
     cerebro = bt.Cerebro()
@@ -24,20 +22,13 @@ def run_backtest(strategy, strategy_params, data_path, start_date, end_date, sta
     cerebro.addanalyzer(bt.analyzers.DrawDown, _name='drawdown')
     cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name='sharperatio')
 
-    logger.info("Starting backtest")
     results = cerebro.run()
-    logger.info("Backtest completed")
 
     res = results[0]
 
     trade_analyzer = res.analyzers.tradeanalyzer.get_analysis()
     drawdown = res.analyzers.drawdown.get_analysis()
     sharperatio = res.analyzers.sharperatio.get_analysis()
-
-    logger.info(f"Final Portfolio Value: {cerebro.broker.getvalue()}")
-    logger.info(f"Trade Analyzer: {trade_analyzer}")
-    logger.info(f"Drawdown: {drawdown}")
-    logger.info(f"Sharpe Ratio: {sharperatio}")
 
     return {
         'trade_analyzer': trade_analyzer,
