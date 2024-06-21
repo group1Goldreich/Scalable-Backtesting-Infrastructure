@@ -1,5 +1,6 @@
 from sma_strategy import SmaStrategy
 from ema_strategy import EmaStrategy
+from rsi_strategy import RsiStrategy
 from backtest import run_backtest
 from logger import setup_logger
 
@@ -9,7 +10,8 @@ def main(strategy_name, start_date, end_date, params, start_cash, comm):
 
     strategy_map = {
         'sma': SmaStrategy,
-        'ema': EmaStrategy
+        'ema': EmaStrategy,
+        'rsi': RsiStrategy
     }
 
     if strategy_name in strategy_map:
@@ -25,5 +27,5 @@ def main(strategy_name, start_date, end_date, params, start_cash, comm):
         logger.error(f"Strategy {strategy_name} is not recognized.")
 
 if __name__ == '__main__':
-    main('sma', '2023-06-18', '2024-06-18', {'short_period': 15, 'long_period': 200, 'comm': 0.001}, 1000000, 0.001)
+    main('rsi', '2023-06-18', '2024-06-18', {'rsi_period':15, 'oversold':30, 'overbought':70}, 1000000, 0.001)
     
