@@ -64,3 +64,12 @@ The project will use candlestick data from Yahoo Finance and Binance. Candlestic
 ### Task 4: Build Frontend for Running Backtests
 
 * Build a frontend application for logged-in users to specify scene parameters and get backtest results
+
+**Contributors**
+------
+
+- [Yohanes Teshome kebede](https://github.com/Yohanes213)
+- [Eyerusalem Admassu](https://github.com/jadmassu)
+- [Getachew Abebe](https://github.com/GetachewAbebe)
+- [Mistir Nigusse](https://github.com/mistir-nigusse)
+- [Abdelrhman Yasir](https://github.com/AB-y1)
