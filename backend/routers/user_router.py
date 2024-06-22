@@ -5,17 +5,24 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from  controllers.user_controller import (
+from  ..controllers.user_controller import (
     authenticate_user,
     create_access_token,
     create_user,
     get_current_user,
 )
-from view_models.user_vm import Token, UserCreate, UserResponse
-from utils.database_connection import get_db
+from ..view_models.user_vm import Token, UserCreate, UserResponse
+from ..utils.database_connection import get_db
 
-router = APIRouter()
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 3000
+
+router = APIRouter(
+    prefix="/auth",
+    tags=["authentication"],
+    responses={404: {"description": "Not found"}},
+)
+
+
 @router.post("/login", response_model=Token)
 async def login_for_access_token( form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: AsyncSession = Depends(get_db)) -> Token:
     user = await authenticate_user(db, form_data.username, form_data.password)

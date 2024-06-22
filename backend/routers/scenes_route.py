@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends,  HTTPException,  status
 from sqlalchemy.orm import Session
-from  utils.database_connection import get_db as session
-from controllers  import article_controller
+from ..utils.database_connection import get_db as session
+from ..controllers  import backtest_controller
 
 
-import view_models.scenes_vm as scenes_vm
+from ..view_models.scenes_vm import ScenesBaseVM
 
 
 router = APIRouter(
@@ -14,21 +14,11 @@ router = APIRouter(
 )
 
 
-
-
-
-@router.get("/", response_model=list[scenes_vm.ScenesVM])
-def get_data(skip: int = 0, limit: int = 100,db: Session = Depends(session)):
-    try:
-        db_user = article_controller.get_data(db, skip, limit)
-        return db_user
-    except Exception as e:
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
     
-@router.post("/", response_model=scenes_vm.ScenesVM)
-def create_data(data: scenes_vm.ScenesCreateVM, db: Session = Depends(session)):
+@router.post("/backtest", response_model=ScenesBaseVM)
+def create_data(data: ScenesBaseVM, db: Session = Depends(session)):
     try:
-        db_user = article_controller.create_data(db, data=data)
+        db_user = backtest_controller.backtest(db, data=data)
         return db_user
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))

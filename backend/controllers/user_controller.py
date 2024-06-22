@@ -9,10 +9,10 @@ from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.exc import IntegrityError
-from models.user_model import User as DBUser
-from view_models.user_vm import Token, TokenData, UserCreate, UserInDB
-from utils.database_connection import get_db
-from utils.hash import compare_hash_value, get_hashed_value
+from ..models.user_model import User as DBUser
+from ..view_models.user_vm import Token, TokenData, UserCreate, UserInDB
+from ..utils.database_connection import get_db
+from ..utils.hash import compare_hash_value, get_hashed_value
 
 
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
@@ -81,3 +81,6 @@ async def create_user(db: AsyncSession, user: UserCreate):
         raise HTTPException(status_code=400, detail="Username or email already registered")
     db.refresh(db_user)
     return db_user
+
+
+

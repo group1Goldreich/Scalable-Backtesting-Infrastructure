@@ -1,8 +1,9 @@
 from fastapi import  FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from  routers import user_router
+from  .routers import user_router
+from  .routers import scenes_route
 import uvicorn
-from utils.database_connection import create_all_tables
+from .utils.database_connection import create_all_tables
 
 
 
@@ -27,6 +28,7 @@ create_all_tables()
 
 #routers 
 app.include_router(user_router.router)
+app.include_router(scenes_route.router)
 
 if __name__ == "__main__":
     
