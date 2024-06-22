@@ -1,12 +1,13 @@
 
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
-from ...utils.database_connection import Base
+from utils.database_connection import Base
 
 
 
 class BacktestResult(Base):
     __tablename__ = 'backtest_results'
+    
     backtest_id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey('users.user_id'))
     indicator_id = Column(Integer, ForeignKey('indicators.indicator_id'))

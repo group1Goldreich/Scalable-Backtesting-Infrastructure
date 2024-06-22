@@ -1,12 +1,10 @@
 from fastapi import APIRouter, Depends,  HTTPException,  status
 from sqlalchemy.orm import Session
-from  backend.models.database_connection import get_db as session
+from  utils.database_connection import get_db as session
 from controllers  import article_controller
 
 
 import view_models.scenes_vm as scenes_vm
-
-
 
 
 router = APIRouter(

@@ -1,14 +1,18 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Table
 from sqlalchemy.orm import relationship
-from ...utils.database_connection import Base
+from utils.database_connection import Base
+
 
 
 class Scene(Base):
     __tablename__ = 'scenes'
+    
     scene_id = Column(Integer, primary_key=True, index=True)
     scene_name = Column(String)
     date_created = Column(Date)
     last_updated = Column(Date)
+
+
 
 
 
