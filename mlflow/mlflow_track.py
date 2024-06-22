@@ -4,7 +4,7 @@ import mlflow.pyfunc
 mlflow.set_tracking_uri("http://localhost:5001")
 
 
-def track(strategy, start_date, end_date, start_cash, commission, params, drawdown):
+def track(strategy, start_date, end_date, start_cash, commission, params, metrics):
 
         with mlflow.start_run():
             mlflow.log_param('Strategy', strategy)
@@ -16,4 +16,5 @@ def track(strategy, start_date, end_date, start_cash, commission, params, drawdo
             for key, value in params.items():
                 mlflow.log_param(f'param_{key}', value)
             
-            mlflow.log_metric('max_draw_down', drawdown.max.drawdown)
+            for key, value in metrics.items():
+                 mlflow.log_metric(f'metric_ {key}', value)
