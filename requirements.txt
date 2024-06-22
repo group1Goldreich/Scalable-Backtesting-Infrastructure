@@ -6,3 +6,4 @@ mlflow
 requests
 streamlit
 backtrader
+apache-airflow
