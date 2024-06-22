@@ -6,3 +6,9 @@ mlflow
 requests
 streamlit
 backtrader
+
+fastapi
+python-dotenv
+sqlalchemy
+pyjwt
+passlib[bcrypt]
