@@ -16,7 +16,7 @@ from utils.database_connection import get_db
 
 router = APIRouter()
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
-@router.post("/token", response_model=Token)
+@router.post("/login", response_model=Token)
 async def login_for_access_token( form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: AsyncSession = Depends(get_db)) -> Token:
     user = await authenticate_user(db, form_data.username, form_data.password)
     if not user:
@@ -36,14 +36,9 @@ async def signup(user: UserCreate, db: AsyncSession = Depends(get_db)):
     new_user = await create_user(db, user)
     return new_user
 
-@router.get("/users/me/", response_model=UserResponse)
+@router.get("/currentUser", response_model=UserResponse)
 async def read_users_me(
     current_user: Annotated[UserResponse, Depends(get_current_user)],
 ):
     return current_user
 
-@router.get("/users/me/items/")
-async def read_own_items(
-    current_user: Annotated[UserResponse, Depends(get_current_user)],
-):
-    return [{"item_id": "Foo", "owner": current_user.username}]
