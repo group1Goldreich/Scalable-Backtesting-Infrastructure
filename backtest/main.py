@@ -7,6 +7,7 @@ from cci_strategy import CciStrategy
 from backtest import run_backtest
 import sys
 import os
+import json
 
 sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/kafka_scripts")))
 from kafka_consumer import consume_backtest_request
@@ -15,7 +16,11 @@ from kafka_producer import send_backtest_results
 sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/mlflow")))
 from mlflow_track import track
 
-def main(strategy_name, start_date, end_date, params, start_cash, comm):
+with open('backtest/config.json', 'r') as f:
+    data_config = json.load(f)
+
+
+def main(name, strategy_name, start_date, end_date, params, start_cash, comm):
     strategy_map = {
         'sma': SmaStrategy,
         'ema': EmaStrategy,
@@ -24,10 +29,11 @@ def main(strategy_name, start_date, end_date, params, start_cash, comm):
         'adx': AdxStrategy,
         'cci': CciStrategy
     }
+    data_path = f'data/{data_config[name]}.csv'
 
     if strategy_name in strategy_map:
         strategy = strategy_map[strategy_name]
-        results = run_backtest(strategy, params, 'data/BTC-USD.csv', start_date, end_date, start_cash, comm)
+        results = run_backtest( strategy, params, data_path, start_date, end_date, start_cash, comm)
         
         # Extract desired metrics
         num_trades = results['trade_analyzer'].total.total
@@ -45,7 +51,7 @@ def main(strategy_name, start_date, end_date, params, start_cash, comm):
         }
 
         send_backtest_results(metrics)
-        track(strategy, start_date, end_date, start_cash, comm, params, metrics)
+        track(name, strategy, start_date, end_date, start_cash, comm, params, metrics)
 
         # Return extracted metrics
         return metrics
