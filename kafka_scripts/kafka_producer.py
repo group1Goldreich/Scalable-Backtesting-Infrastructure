@@ -3,8 +3,9 @@ from kafka import KafkaProducer
 
 producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
-def send_backend_request(start_date, end_date, strategy, params, start_cash, comm):
+def send_backend_request(name, start_date, end_date, strategy, params, start_cash, comm):
     message = {
+        'name': name,
         'start_date': start_date,
         'end_date': end_date,
         'strategy': strategy,
@@ -14,6 +15,7 @@ def send_backend_request(start_date, end_date, strategy, params, start_cash, com
     }
     producer.send('backend_requests', value=message)
     producer.flush()
+
 
 def send_backtest_results(metrics):
     message = {
