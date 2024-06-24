@@ -23,7 +23,7 @@ app.add_middleware(
 )
 
 #Drop tables
-drop_all_tables()
+# drop_all_tables
 
 #Create tables
 create_all_tables()
