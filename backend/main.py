@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from  .routers import user_router
 from  .routers import scenes_route
 import uvicorn
-from .utils.database_connection import create_all_tables
+from .utils.database_connection import create_all_tables, drop_all_tables
 
 
 
@@ -22,6 +22,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+#Drop tables
+# drop_all_tables
 
 #Create tables
 create_all_tables()

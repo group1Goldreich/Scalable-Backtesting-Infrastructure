@@ -6,7 +6,7 @@ from ..utils.database_connection import Base
 
 class Scene(Base):
     __tablename__ = 'scenes'
-    
+    coin_name = Column(String)
     scene_id = Column(Integer, primary_key=True, index=True)
     start_cash = Column(Float)
     commission = Column(Float)
