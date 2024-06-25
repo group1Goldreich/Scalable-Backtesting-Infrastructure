@@ -8,7 +8,7 @@ class IndicatorParameter(Base):
     indicator_id = Column(Integer, ForeignKey("indicators.indicator_id"))
     parameter_name = Column(String, index=True)
     parameter_value = Column(Float)
-
+    scene = relationship("Indicator", back_populates="indicators")
     # indicator = relationship("Indicator", back_populates="parameters")
     backtest_results = relationship("BacktestResult", back_populates="indicator_parameters")
 

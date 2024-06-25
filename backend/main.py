@@ -1,5 +1,7 @@
 from fastapi import  FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+from backend.controllers.populate_init import populate_data
 from  .routers import user_router
 from  .routers import scenes_route
 import uvicorn
@@ -26,7 +28,12 @@ app.add_middleware(
 # drop_all_tables
 
 #Create tables
+
+    
+
 create_all_tables()
+# populate_data()
+   
 
 #routers 
 app.include_router(user_router.router)

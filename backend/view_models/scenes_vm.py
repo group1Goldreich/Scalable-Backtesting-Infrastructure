@@ -17,8 +17,7 @@ class ScenesBaseVM(BaseModel):
     start_cash : float
     commission : float
    
-   
-   
+
 
    
 class ScenesCreateVM(ScenesBaseVM):
