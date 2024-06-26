@@ -168,3 +168,6 @@ mlflow.db
 
 test.py
 test_consumer.py
+
+
+backtest/data/
