@@ -24,3 +24,6 @@ class BacktestResult(Base):
     indicator_parameters = relationship("IndicatorParameter", back_populates="backtest_results")
     
     scene = relationship("Scene", back_populates="backtests")
+    
+    
+    
