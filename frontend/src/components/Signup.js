@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import qs from 'qs'
 const validationSchema = Yup.object({
   username: Yup.string()
     .min(3, 'Username must be at least 3 characters')
@@ -24,16 +24,20 @@ function Signup() {
     },
     validationSchema,
     onSubmit: async (values) => {
+      
       try {
-        const response = await axios.post('http://localhost:8000/auth/signup', values); // Replace with your backend signup API endpoint
+        const response = await axios.post(
+          'http://localhost:8000/auth/signup', 
+          qs.stringify(values), 
+          { headers: { 'Content-Type': 'application/json' } }
+
+        );
         console.log('Signup successful!', response.data);
 
-        // Handle successful signup (e.g., redirect to login or display success message)
         alert('Signup successful! Please login to continue.');
-        window.location.href = '/login'; // Redirect to login page
+        window.location.href = '/login'; 
       } catch (error) {
         console.error('Signup error:', error);
-        // Handle signup error (e.g., display error message)
         const errorMessage = document.getElementById('error-message');
         if (errorMessage) {
           errorMessage.textContent = 'Signup failed. Please try again.';
