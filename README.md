@@ -50,7 +50,7 @@ python3 backtest/main.py
 3. Start the backend:
 Then run the backend
 ```bash
-fastapi dev backend/main.py
+fastapi run backend/main.py
 ```
 
 4. Launch the frontend:
