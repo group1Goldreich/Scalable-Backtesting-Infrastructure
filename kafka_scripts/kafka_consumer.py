@@ -33,4 +33,6 @@ def consume_backtest_results():
 
     for message in consumer:
         metrics = message.value['metrics']
+
         return metrics
+    
