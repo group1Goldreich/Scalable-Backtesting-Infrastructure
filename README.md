@@ -44,7 +44,7 @@ docker-compose up -d
 
 2. Execute the backtest:
 ```bash
-python3/main.py
+python3 main.py
 ```
 
 3. Start the backend:
