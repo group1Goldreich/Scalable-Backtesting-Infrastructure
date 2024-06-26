@@ -220,7 +220,7 @@ def save_backtest_result(db, db_indicator, db_scene, metrics):
 def params_to_dict(params: List[IndicatorParams]) -> dict:
     return {param.name: param.value for param in params}
 
-# def backtest(db: Session, data: ScenesBaseVM):
+
 #     name = 'Bitcoin'    
 #     strategy = 'macd'
 #     start_date = '2023-06-24'

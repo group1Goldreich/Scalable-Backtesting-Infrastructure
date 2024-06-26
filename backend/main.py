@@ -1,7 +1,5 @@
 from fastapi import  FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from backend.controllers.populate_init import populate_data
 from  .routers import user_router
 from  .routers import scenes_route
 import uvicorn
