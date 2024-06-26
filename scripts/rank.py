@@ -1,4 +1,3 @@
-
 import pandas as pd
 
 # Define the paths to the CSV files
