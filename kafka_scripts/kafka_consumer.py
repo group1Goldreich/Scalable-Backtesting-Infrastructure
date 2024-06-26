@@ -2,7 +2,7 @@ from kafka import KafkaConsumer
 import json
 import sys
 import os
-
+import logging
 def consume_backtest_request():
     consumer = KafkaConsumer(
         'backend_requests',
@@ -28,9 +28,17 @@ def consume_backtest_results():
         'backtest_results',
         bootstrap_servers='localhost:9092',
         auto_offset_reset='latest',
-        value_deserializer=lambda v: json.loads(v.decode('utf-8'))
+        # consumer_timeout_ms=30000,
+        value_deserializer=lambda v: json.loads(v.decode('utf-8')),
+        
     )
-
-    for message in consumer:
-        metrics = message.value['metrics']
+   
+    try:
+        for mess in consumer:
+            metrics=mess.value['metrics']
+            return metrics
+       
         return metrics
+    except Exception as e:
+        print("Consumer Error",e)
+        return 0

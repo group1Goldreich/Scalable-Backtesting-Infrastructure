@@ -12,8 +12,7 @@ class Scene(Base):
     commission = Column(Float)
     start_date = Column(String)
     end_date = Column(String)
-    indicator_parameter = Column(Integer, ForeignKey('indicator_parameters.id'))
-    indicators = relationship("Indicator", back_populates="scene")
+   
     users = relationship("User", secondary="scene_user", back_populates="scenes")
     backtests = relationship("BacktestResult", back_populates="scene")
     __table_args__ = (UniqueConstraint('scene_id', name='_scene_id_uc'),)

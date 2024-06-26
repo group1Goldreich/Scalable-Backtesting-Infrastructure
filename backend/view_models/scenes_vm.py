@@ -6,7 +6,7 @@ from pydantic import BaseModel
 
 class IndicatorParams(BaseModel):
     name: str
-    value: float
+    value: int
 
 class ScenesBaseVM(BaseModel):
     coin_name: str

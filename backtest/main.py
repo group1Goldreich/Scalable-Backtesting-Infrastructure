@@ -9,14 +9,17 @@ import sys
 import os
 import json
 
-sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/kafka_scripts")))
-from kafka_consumer import consume_backtest_request
-from kafka_producer import send_backtest_results
+# sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/kafka_scripts")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from kafka_scripts.kafka_consumer import consume_backtest_request
+from kafka_scripts.kafka_producer import send_backtest_results
 
-sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/mlflow")))
+# sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/mlflow")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../mlflow')))
+
 from mlflow_track import track
 
-with open('backtest/config.json', 'r') as f:
+with open('./config.json', 'r') as f:
     data_config = json.load(f)
 
 
@@ -49,8 +52,8 @@ def main(name, strategy_name, start_date, end_date, params, start_cash, comm):
             'Max drawdown': max_drawdown,
             'Sharpe ratio': sharpe_ratio
         }
-
-        send_backtest_results(metrics)
+        print("----metrics",metrics)
+        # send_backtest_results(metrics)
         track(name, strategy, start_date, end_date, start_cash, comm, params, metrics)
 
         # Return extracted metrics
@@ -63,4 +66,6 @@ if __name__ == '__main__':
     for inputs in consume_backtest_request():
         print(inputs)
         results = main(*inputs)
+        send_backtest_results(results)
+        
         print(results)

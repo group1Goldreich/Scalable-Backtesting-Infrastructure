@@ -19,8 +19,9 @@ router = APIRouter(
 @router.post("/backtest",response_model=BackTestResult)
 async def create_data(data: ScenesBaseVM, db: AsyncSession =  Depends(session)):
     try:
-        print("session", session)
-        backtest_result = await backtest_controller.backtest(db, data=data)
+               
+        backtest_result =  backtest_controller.backtest(db, data=data)
         return backtest_result
     except Exception as e:
+        print("ERRPR", e)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
