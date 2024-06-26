@@ -1,24 +1,23 @@
-from sma_strategy import SmaStrategy
-from ema_strategy import EmaStrategy
-from rsi_strategy import RsiStrategy
-from macd_strategy import MacdStrategy
-from adx_strategy import AdxStrategy
-from cci_strategy import CciStrategy
-from backtest import run_backtest
+from backtest.strategy.sma import SmaStrategy
+from backtest.strategy.ema import EmaStrategy
+from backtest.strategy.rsi import RsiStrategy
+from backtest.strategy.macd import MacdStrategy
+from backtest.strategy.adx import AdxStrategy
+from backtest.strategy.cci import CciStrategy
+from backtest.backtest import run_backtest
 import sys
 import os
 import json
 
 sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/kafka_scripts")))
+sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/mlflow")))
+
 from kafka_consumer import consume_backtest_request
 from kafka_producer import send_backtest_results
-
-sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/mlflow")))
 from mlflow_track import track
 
 with open('backtest/config.json', 'r') as f:
     data_config = json.load(f)
-
 
 def main(name, strategy_name, start_date, end_date, params, start_cash, comm):
     strategy_map = {
