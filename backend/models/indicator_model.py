@@ -8,7 +8,7 @@ class Indicator(Base):
     indicator_id = Column(Integer, primary_key=True, index=True)
     indicator_name = Column(String, index=True)
    
-    parameters = relationship("IndicatorParameter", back_populates="indicators")
-    backtest_results = relationship("BacktestResult", back_populates="indicator")
+    # backtest_results = relationship("BacktestResult", back_populates="indicator")
+    parameters = relationship("IndicatorParameter", back_populates="indicator")
     
     

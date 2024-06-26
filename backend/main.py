@@ -6,8 +6,6 @@ import uvicorn
 from .utils.database_connection import create_all_tables, drop_all_tables
 
 
-
-
 app = FastAPI(
         title="Scalable Backtesting",
         description="",
