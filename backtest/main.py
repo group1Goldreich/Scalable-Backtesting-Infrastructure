@@ -9,14 +9,23 @@ import sys
 import os
 import json
 
-sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/kafka_scripts")))
-sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/mlflow")))
+# sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/kafka_scripts")))
+# sys.path.append(os.path.abspath(os.path.join("../Scalable-Backtesting-Infrastructure/mlflow")))
 
-from kafka_consumer import consume_backtest_request
-from kafka_producer import send_backtest_results
-from mlflow_track import track
+# from kafka_consumer import consume_backtest_request
+# from kafka_producer import send_backtest_results
+# from mlflow_track import track
 
-with open('backtest/config.json', 'r') as f:
+
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from kafka_scripts.kafka_consumer import consume_backtest_request
+from kafka_scripts.kafka_producer import send_backtest_results
+
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../mlflow')))
+
+with open('./config.json', 'r') as f:
     data_config = json.load(f)
 
 def main(name, strategy_name, start_date, end_date, params, start_cash, comm):

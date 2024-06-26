@@ -6,8 +6,6 @@ import uvicorn
 from .utils.database_connection import create_all_tables, drop_all_tables
 
 
-
-
 app = FastAPI(
         title="Scalable Backtesting",
         description="",
@@ -23,10 +21,12 @@ app.add_middleware(
 )
 
 #Drop tables
-# drop_all_tables
+drop_all_tables
 
-#Create tables
+#Create tables  
 create_all_tables()
+# populate_data()
+   
 
 #routers 
 app.include_router(user_router.router)
