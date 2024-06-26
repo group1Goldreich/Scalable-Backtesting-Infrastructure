@@ -52,7 +52,7 @@ def main(name, strategy_name, start_date, end_date, params, start_cash, comm):
             'Max drawdown': max_drawdown,
             'Sharpe ratio': sharpe_ratio
         }
-        print("----metrics",metrics)
+        
         # send_backtest_results(metrics)
         track(name, strategy, start_date, end_date, start_cash, comm, params, metrics)
 
