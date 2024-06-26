@@ -68,7 +68,7 @@ The project will use candlestick data from Yahoo Finance and Binance. Candlestic
 **Contributors**
 ------
 
-- [Yohanes Teshome kebede](https://github.com/Yohanes213)
+- [Yohanes Teshome Kebede](https://github.com/Yohanes213)
 - [Eyerusalem Admassu](https://github.com/jadmassu)
 - [Getachew Abebe](https://github.com/GetachewAbebe)
 - [Mistir Nigusse](https://github.com/mistir-nigusse)
