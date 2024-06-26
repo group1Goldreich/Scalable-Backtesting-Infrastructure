@@ -32,13 +32,9 @@ def consume_backtest_results():
         value_deserializer=lambda v: json.loads(v.decode('utf-8')),
         
     )
-   
-    try:
-        for mess in consumer:
-            metrics=mess.value['metrics']
-            return metrics
-       
+
+    for message in consumer:
+        metrics = message.value['metrics']
+
         return metrics
-    except Exception as e:
-        print("Consumer Error",e)
-        return 0
+    
