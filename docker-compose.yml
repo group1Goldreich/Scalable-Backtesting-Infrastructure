@@ -25,15 +25,6 @@ services:
     networks:
       - backend-tier
 
-  # mlflow:
-  #   image: bitnami/mlflow
-  #   # command: ["bash", "-c", "source activate mlflow-env && mlflow server --host 0.0.0.0"]  # Adapt environment name if needed
-  #   command: ["bash", "-c", "mlflow server --host 0.0.0.0"]
-  #   ports:
-  #     - "5000:5000"
-  #   environment:
-  #     - MLFLOW_TRACKING_URI=http://mlflow:5000
-
   mlflow:
     build:
       context: .
@@ -41,24 +32,6 @@ services:
     command: mlflow server --host 0.0.0.0
     ports:
       - "5000:5000"
- 
-
-  # backtester:
-  #   build: 
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   depends_on:
-  #     - kafka
-  #     - zookeeper 
-  #   environment:
-  #     KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-  #     MLFLOW_TRACKING_URI: http://mlflow:5000
-  #   networks:
-  #     - backend-tier
-  #   # volumes:
-  #   #   - ./data:/app/data
-  #   #   - ./config:/app/config
-
 
 networks:
   backend-tier:
