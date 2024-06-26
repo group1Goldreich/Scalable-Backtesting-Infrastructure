@@ -24,6 +24,7 @@ from kafka_scripts.kafka_producer import send_backtest_results
 
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../mlflow')))
+from mlflow_track import track
 
 with open('./config.json', 'r') as f:
     data_config = json.load(f)
@@ -33,7 +34,7 @@ def main(name, strategy_name, start_date, end_date, params, start_cash, comm):
         'sma': SmaStrategy,
         'ema': EmaStrategy,
         'rsi': RsiStrategy,
-        'macd': MacdStrategy,
+        'MACD': MacdStrategy,
         'adx': AdxStrategy,
         'cci': CciStrategy
     }
