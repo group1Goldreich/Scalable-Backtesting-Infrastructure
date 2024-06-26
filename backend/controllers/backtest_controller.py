@@ -21,24 +21,24 @@ from kafka_scripts.kafka_producer import send_backend_request
 def backtest(db: Session, data: ScenesBaseVM) -> BacktestResult:
     try:
         params_dict = params_to_dict(data.params)
-        existing_result = check_existing_result(db, data, params_dict)
+        # existing_result = check_existing_result(db, data, params_dict)
         # if existing_result:
         #     return existing_result
-        # send_request(data, params_dict)
-        # metrics = consume_backtest_results()
+        send_request(data, params_dict)
+        metrics = consume_backtest_results()
 
-        # if metrics:
-        #     db_scene = save_scene(db, data)
-        #     print("db_scene",db_scene)
-        #     db_backtest_result = save_backtest_result(db,  db_scene, metrics)
-        #     print("db_backtest_result", db_backtest_result)
-        #     db_indicator = save_indicator(db, data.strategy_name)
-        #     print("db_indicator",db_indicator)
-        #     save_indicator_params(db, db_indicator.indicator_id,db_backtest_result, data.params)
-        #     print("db_backtest_result", db_backtest_result)
-        #     return db_backtest_result
-        # else:
-        #     raise HTTPException(status_code=500, detail="No metrics received from backtest")
+        if metrics:
+            db_scene = save_scene(db, data)
+            print("db_scene",db_scene)
+            db_backtest_result = save_backtest_result(db,  db_scene, metrics)
+            print("db_backtest_result", db_backtest_result)
+            db_indicator = save_indicator(db, data.strategy_name)
+            print("db_indicator",db_indicator)
+            save_indicator_params(db, db_indicator.indicator_id,db_backtest_result, data.params)
+            print("db_backtest_result", db_backtest_result)
+            return db_backtest_result
+        else:
+            raise HTTPException(status_code=500, detail="No metrics received from backtest")
 
     except SQLAlchemyError as e:
         print("Database error", e)
