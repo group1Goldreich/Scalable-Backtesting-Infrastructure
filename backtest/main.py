@@ -1,10 +1,10 @@
-from backtest.strategy.sma import SmaStrategy
-from backtest.strategy.ema import EmaStrategy
-from backtest.strategy.rsi import RsiStrategy
-from backtest.strategy.macd import MacdStrategy
-from backtest.strategy.adx import AdxStrategy
-from backtest.strategy.cci import CciStrategy
-from backtest.backtest import run_backtest
+from strategy.sma import SmaStrategy
+from strategy.ema import EmaStrategy
+from strategy.rsi import RsiStrategy
+from strategy.macd import MacdStrategy
+from strategy.adx import AdxStrategy
+from strategy.cci import CciStrategy
+from backtest import run_backtest
 import sys
 import os
 import json
@@ -49,7 +49,7 @@ def main(name, strategy_name, start_date, end_date, params, start_cash, comm):
             'Sharpe ratio': sharpe_ratio
         }
 
-        send_backtest_results(metrics)
+        #send_backtest_results(metrics)
         track(name, strategy, start_date, end_date, start_cash, comm, params, metrics)
 
         # Return extracted metrics
@@ -62,4 +62,5 @@ if __name__ == '__main__':
     for inputs in consume_backtest_request():
         print(inputs)
         results = main(*inputs)
+        send_backtest_results(results)
         print(results)
