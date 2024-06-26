@@ -191,12 +191,17 @@ function BacktestForm() {
               <p>{results.error}</p>
             ) : (
               <>
-                <p><strong>Return:</strong> {results.return}</p>
-                <p><strong>Number of Trades:</strong> {results.numberOfTrades}</p>
-                <p><strong>Winning Trades:</strong> {results.winningTrades}</p>
-                <p><strong>Losing Trades:</strong> {results.losingTrades}</p>
-                <p><strong>Max Drawdown:</strong> {results.maxDrawdown}</p>
-                <p><strong>Sharpe Ratio:</strong> {results.sharpeRatio}</p>
+                <p><strong>Portfolio value:</strong> {results.final_portfolio_value}</p>
+                <p><strong>Number of Trades:</strong> {results.total_trades}</p>
+                <p><strong>Winning Trades:</strong> {results.winning_trades}</p>
+                <p><strong>Losing Trades:</strong> {results.losing_trades}</p>
+                <p><strong>Max Drawdown:</strong> {results.max_drawdown}</p>
+                <p><strong>Max Moneydown:</strong> {results.max_moneydown}</p>
+                <p><strong>Max Moneydown:</strong> {results.max_moneydown}</p>
+                <p><strong>Sharpe_ratio:</strong> {results.sharpe_ratio}</p>
+
+
+
               </>
             )}
           </div>

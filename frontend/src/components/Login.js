@@ -26,7 +26,7 @@ function Login() {
       try {
         const response = await axios.post(
           'http://localhost:8000/auth/login', 
-          qs.stringify(values), // Use qs to convert the values to form-encoded format
+          qs.stringify(values), 
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
         );
         const { access_token } = response.data;
