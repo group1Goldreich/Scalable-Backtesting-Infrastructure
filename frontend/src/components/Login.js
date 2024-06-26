@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import qs from 'qs';
 
 const validationSchema = Yup.object({
   username: Yup.string()
@@ -11,8 +12,6 @@ const validationSchema = Yup.object({
   password: Yup.string()
     .min(6, 'Password must be at least 6 characters')
     .matches(/[a-zA-Z]/, 'Password must contain a letter')
-    .matches(/\d/, 'Password must contain a number')
-    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain a special character')
     .required('Required'),
 });
 
@@ -25,13 +24,17 @@ function Login() {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('http://localhost:5000/auth/login', values); // Replace with your backend API endpoint
+        const response = await axios.post(
+          'http://localhost:8000/auth/login', 
+          qs.stringify(values), // Use qs to convert the values to form-encoded format
+          { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+        );
         const { access_token } = response.data;
 
         // Handle successful login (e.g., store token, redirect)
         console.log('Login successful!', access_token);
         localStorage.setItem('access_token', access_token);
-        window.location.href = '/dashboard'; // Assuming dashboard is protected
+        window.location.href = '/backtest'; // Assuming dashboard is protected
       } catch (error) {
         console.error('Login error:', error);
         // Handle login error (e.g., display error message)

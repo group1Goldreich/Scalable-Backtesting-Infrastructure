@@ -11,8 +11,8 @@ const validationSchema = Yup.object({
   password: Yup.string()
     .min(6, 'Password must be at least 6 characters')
     .matches(/[a-zA-Z]/, 'Password must contain a letter')
-    .matches(/\d/, 'Password must contain a number')
-    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain a special character')
+    // .matches(/\d/, 'Password must contain a number')
+    // .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain a special character')
     .required('Required'),
 });
 
@@ -25,7 +25,7 @@ function Signup() {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await axios.post('http://localhost:5000/auth/signup', values); // Replace with your backend signup API endpoint
+        const response = await axios.post('http://localhost:8000/auth/signup', values); // Replace with your backend signup API endpoint
         console.log('Signup successful!', response.data);
 
         // Handle successful signup (e.g., redirect to login or display success message)

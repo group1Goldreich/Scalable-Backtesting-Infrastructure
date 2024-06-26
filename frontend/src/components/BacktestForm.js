@@ -1,5 +1,5 @@
-// src/components/BacktestForm.js
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function BacktestForm() {
   const [parameters, setParameters] = useState({
@@ -50,25 +50,33 @@ function BacktestForm() {
     e.preventDefault();
     const params = { ...parameters, ...strategyParams };
     console.log(params);
-    // Simulate API call to backend
-    // const response = await fetch('https://localhost'); 
-    const response = {
-      "return": "10%",
-      "numberOfTrades": 50,
-      "winningTrades": 30,
-      "losingTrades": 20,
-      "maxDrawdown": "5%",
-      "sharpeRatio": 1.5
+
+    // Constructing the data payload as per the backend requirements
+    const data = {
+      coin_name: params.coin,
+      strategy_name: params.strategy,
+      start_date: params.startDate,
+      end_date: params.endDate,
+      start_cash: params.startMoney,
+      commission: params.commission,
+      params: Object.keys(strategyParams).map((key) => ({
+        name: key,
+        value: strategyParams[key],
+      })),
+    };
+
+    try {
+      const response = await axios.post('http://localhost:8000/scenes/backtest', data);
+      setResults(response.data);
+    } catch (error) {
+      console.error('Error running backtest:', error);
+      setResults({ error: 'Failed to run backtest. Please try again later.' });
     }
-    
-    // const data = await response.json();
-    const data = response;
-    setResults(data);
   };
 
   return (
     <div className="card bg-base-100 shadow-xl flex flex-row">
-      <div className="card-body max-w-96 ">
+      <div className="card-body w-1/2">
         <h2 className="card-title">Backtest Parameters</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-control">
@@ -168,7 +176,7 @@ function BacktestForm() {
             />
           </div>
           <div className="form-control mt-4">
-            <button type="submit" className="btn btn-primary bg-green-500">
+            <button type="submit" className="btn btn-primary">
               Run Backtest
             </button>
           </div>
@@ -179,12 +187,18 @@ function BacktestForm() {
         <div className="card-body w-1/2">
           <h3 className="card-title">Backtest Results</h3>
           <div className="p-4 bg-gray-100 rounded-lg">
-            <p><strong>Return:</strong> {results.return}</p>
-            <p><strong>Number of Trades:</strong> {results.numberOfTrades}</p>
-            <p><strong>Winning Trades:</strong> {results.winningTrades}</p>
-            <p><strong>Losing Trades:</strong> {results.losingTrades}</p>
-            <p><strong>Max Drawdown:</strong> {results.maxDrawdown}</p>
-            <p><strong>Sharpe Ratio:</strong> {results.sharpeRatio}</p>
+            {results.error ? (
+              <p>{results.error}</p>
+            ) : (
+              <>
+                <p><strong>Return:</strong> {results.return}</p>
+                <p><strong>Number of Trades:</strong> {results.numberOfTrades}</p>
+                <p><strong>Winning Trades:</strong> {results.winningTrades}</p>
+                <p><strong>Losing Trades:</strong> {results.losingTrades}</p>
+                <p><strong>Max Drawdown:</strong> {results.maxDrawdown}</p>
+                <p><strong>Sharpe Ratio:</strong> {results.sharpeRatio}</p>
+              </>
+            )}
           </div>
         </div>
       )}
