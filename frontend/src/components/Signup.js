@@ -2,6 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const validationSchema = Yup.object({
   username: Yup.string()
@@ -10,8 +11,8 @@ const validationSchema = Yup.object({
   password: Yup.string()
     .min(6, 'Password must be at least 6 characters')
     .matches(/[a-zA-Z]/, 'Password must contain a letter')
-    .matches(/\d/, 'Password must contain a number')
-    .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain a special character')
+    // .matches(/\d/, 'Password must contain a number')
+    // .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Password must contain a special character')
     .required('Required'),
 });
 
@@ -22,14 +23,27 @@ function Signup() {
       password: '',
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      // Handle signin
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post('http://localhost:8000/auth/signup', values); // Replace with your backend signup API endpoint
+        console.log('Signup successful!', response.data);
+
+        // Handle successful signup (e.g., redirect to login or display success message)
+        alert('Signup successful! Please login to continue.');
+        window.location.href = '/login'; // Redirect to login page
+      } catch (error) {
+        console.error('Signup error:', error);
+        // Handle signup error (e.g., display error message)
+        const errorMessage = document.getElementById('error-message');
+        if (errorMessage) {
+          errorMessage.textContent = 'Signup failed. Please try again.';
+        }
+      }
     },
   });
 
   return (
-    <div className="card bg-base-100 shadow-xl">
+    <div className="card bg-base-100 shadow-xl max-w-screen-sm">
       <div className="card-body">
         <h2 className="card-title">Sign Up</h2>
         <form onSubmit={formik.handleSubmit}>
@@ -76,6 +90,7 @@ function Signup() {
         <div className="mt-4">
           <p>Already have an account? <Link to="/login" className="text-blue-500">Login here</Link></p>
         </div>
+        <div id="error-message"></div> {/* Added element for error message */}
       </div>
     </div>
   );
