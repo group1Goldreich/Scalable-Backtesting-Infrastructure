@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
 function BacktestForm() {
   const [parameters, setParameters] = useState({
     coin: '',
@@ -8,28 +7,24 @@ function BacktestForm() {
     startDate: '',
     endDate: '',
     startMoney: '',
-    commission: '',
+    commission: 0,
   });
-
   const [strategyParams, setStrategyParams] = useState({});
   const [results, setResults] = useState(null);
-
   const strategies = {
-    SMA: ['short_period', 'long_period', 'commission'],
-    EMA: ['short_period', 'long_period', 'commission'],
+    SMA: ['short_period', 'long_period', 'comm'],
+    EMA: ['short_period', 'long_period', 'comm'],
     RSI: ['rsi_period', 'oversold', 'overbought'],
-    MACD: ['fast_period', 'slow_period', 'signal_period', 'commission'],
-    ADX: ['adx_period', 'adx_threshold', 'commission'],
-    CCI: ['cci_period', 'cci_upper', 'cci_lower', 'commission'],
+    MACD: ['fast_period', 'slow_period', 'signal_period', 'comm'],
+    ADX: ['adx_period', 'adx_threshold', 'comm'],
+    CCI: ['cci_period', 'cci_upper', 'cci_lower', 'comm'],
   };
-
   const handleChange = (e) => {
     setParameters({
       ...parameters,
       [e.target.name]: e.target.value,
     });
   };
-
   const handleStrategyChange = (e) => {
     const { value } = e.target;
     setParameters({
@@ -38,42 +33,42 @@ function BacktestForm() {
     });
     setStrategyParams(strategies[value] ? strategies[value].reduce((acc, param) => ({ ...acc, [param]: '' }), {}) : {});
   };
-
   const handleParamsChange = (e) => {
     setStrategyParams({
       ...strategyParams,
       [e.target.name]: e.target.value,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const params = { ...parameters, ...strategyParams };
-    console.log(params);
-
-    // Constructing the data payload as per the backend requirements
+    const updatedStrategyParams = Object.keys(strategyParams).reduce((acc, key) => {
+      acc[key] = parseFloat(strategyParams[key], 10);
+      return acc;
+    }, {});
+    const params = { ...parameters, ...updatedStrategyParams };
     const data = {
       coin_name: params.coin,
       strategy_name: params.strategy,
       start_date: params.startDate,
       end_date: params.endDate,
-      start_cash: params.startMoney,
-      commission: params.commission,
-      params: Object.keys(strategyParams).map((key) => ({
+      start_cash: parseInt(params.startMoney, 10),
+      commission: parseFloat(params.commission, 10),
+      params: Object.keys(updatedStrategyParams).map((key) => ({
         name: key,
-        value: strategyParams[key],
+        value: updatedStrategyParams[key],
       })),
     };
-
+    console.log(data)
     try {
       const response = await axios.post('http://localhost:8000/scenes/backtest', data);
+      console.log('response');
+      console.log(response.data);
       setResults(response.data);
     } catch (error) {
       console.error('Error running backtest:', error);
       setResults({ error: 'Failed to run backtest. Please try again later.' });
     }
   };
-
   return (
     <div className="card bg-base-100 shadow-xl flex flex-row">
       <div className="card-body w-1/2">
@@ -114,7 +109,7 @@ function BacktestForm() {
                 <span className="label-text">{param.replace('_', ' ')}</span>
               </label>
               <input
-                type="text"
+                type="number" // Ensuring that the input type is number for parameters
                 name={param}
                 value={strategyParams[param]}
                 onChange={handleParamsChange}
@@ -168,8 +163,8 @@ function BacktestForm() {
             </label>
             <input
               type="number"
-              name="commission"
-              value={parameters.commission}
+              name="comm"
+              value={parameters.comm}
               onChange={handleChange}
               className="input input-bordered"
               required
@@ -183,10 +178,12 @@ function BacktestForm() {
         </form>
       </div>
 
+
+
       {results && (
-        <div className="card-body w-1/2">
+        <div className="card-body w-2/3">
           <h3 className="card-title">Backtest Results</h3>
-          <div className="p-4 bg-gray-100 rounded-lg">
+          <div className="p-4 text-lg bg-gray-100 rounded-lg text-slate-800">
             {results.error ? (
               <p>{results.error}</p>
             ) : (
@@ -197,11 +194,7 @@ function BacktestForm() {
                 <p><strong>Losing Trades:</strong> {results.losing_trades}</p>
                 <p><strong>Max Drawdown:</strong> {results.max_drawdown}</p>
                 <p><strong>Max Moneydown:</strong> {results.max_moneydown}</p>
-                <p><strong>Max Moneydown:</strong> {results.max_moneydown}</p>
-                <p><strong>Sharpe_ratio:</strong> {results.sharpe_ratio}</p>
-
-
-
+                <p><strong>Sharpe ratio:</strong> {results.sharpe_ratio}</p>
               </>
             )}
           </div>
@@ -210,5 +203,4 @@ function BacktestForm() {
     </div>
   );
 }
-
 export default BacktestForm;
