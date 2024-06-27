@@ -31,12 +31,12 @@ with open('./config.json', 'r') as f:
 
 def main(name, strategy_name, start_date, end_date, params, start_cash, comm):
     strategy_map = {
-        'sma': SmaStrategy,
-        'ema': EmaStrategy,
-        'rsi': RsiStrategy,
+        'SMA': SmaStrategy,
+        'EMA': EmaStrategy,
+        'RSI': RsiStrategy,
         'MACD': MacdStrategy,
-        'adx': AdxStrategy,
-        'cci': CciStrategy
+        'ADX': AdxStrategy,
+        'CCI': CciStrategy
     }
     data_path = f'data/{data_config[name]}.csv'
 
