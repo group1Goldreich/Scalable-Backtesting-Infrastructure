@@ -65,6 +65,6 @@ nvm start
 
 - [Yohanes Teshome Kebede](https://github.com/Yohanes213)
 - [Eyerusalem Admassu](https://github.com/jadmassu)
-- [Getachew Abebe](https://github.com/GetachewAbebe)
+- [Getachew Agegnehu](https://github.com/GetachewAgegnehu)
 - [Mistir Nigusse](https://github.com/mistir-nigusse)
 - [Abdelrhman Yasir](https://github.com/AB-y1)
