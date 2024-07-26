@@ -67,4 +67,4 @@ nvm start
 - [Eyerusalem Admassu](https://github.com/jadmassu)
 - [Getachew Agegnehu](https://github.com/GetachewAgegnehu)
 - [Mistir Nigusse](https://github.com/mistir-nigusse)
-- [Abdelrhman Yasir](https://github.com/AB-y1)
+- [Abdelrahman Ahmed](https://github.com/AB-y1)
